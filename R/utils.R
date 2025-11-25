@@ -17,6 +17,11 @@ download_data_csv = function(view_name, destfile = tempfile(fileext = ".csv"),
 rename_columns = function(data) {
   data = data %>%
     janitor::clean_names()
-  colnames(df) = janitor::make_clean_names(colnames(df))
+  data = data %>%
+    mutate(
+      date_updated = mdy(date_updated),
+      start_date = mdy(start_date),
+      end_date = mdy(end_date),
+    )
   return(df)
 }

@@ -44,8 +44,15 @@ list(
   tar_target(file, filename, format = "file"),
 
 
-  tar_target(data,
-             read_csv(file))
+  tar_target(
+    data,
+    {
+      data = read_csv(file)
+      stop_for_problems(data)
+      # remove this line and see what data is (e.g. returned)
+      data
+    }),
+  tar_targets()
 
 
 
