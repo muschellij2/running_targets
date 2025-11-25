@@ -2,7 +2,7 @@
 library(targets)
 library(tarchetypes) # Load other packages as needed.
 
-
+tar_outdated()
 
 tar_visnetwork()
 tar_read(data)
