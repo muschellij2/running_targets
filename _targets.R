@@ -14,7 +14,7 @@ tar_option_set(
   packages = c("tidyverse"), # Packages that your targets need for their tasks.
 
   # track **all the objects and datasets** from this package as if they were part of the global environment.
-  imports = c("bigrquery"),
+  # imports = c("bigrquery"),
   # default is rds, which is OK.  qs is fast.  Auto usually works well
   # likely need to do install.packages("qs2")
   # format = "rds" # Optionally set the default storage format. qs is fast.
