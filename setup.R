@@ -1,0 +1,5 @@
+library(usethis)
+dir.create(here::here("R"), recursive = TRUE, showWarnings = FALSE)
+usethis::use_readme_rmd()
+usethis::use_git("Initial commit")
+targets::use_targets()
