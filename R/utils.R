@@ -1,5 +1,5 @@
 read_data_meta = function(view_name) {
-  jsonlite::read_json(glue::glue("https://healthdata.gov/api/views/{view_name}.json"))
+  jsonlite::read_json(glue::glue("https://data.cdc.gov/api/views/{view_name}.json"))
 }
 
 get_last_updated_date = function(view_name) {
@@ -9,7 +9,14 @@ get_last_updated_date = function(view_name) {
 
 download_data_csv = function(view_name, destfile = tempfile(fileext = ".csv"),
                              ...) {
-  url = glue::glue("https://healthdata.gov/api/views/{view_name}/rows.csv?accessType=DOWNLOAD")
+  url = glue::glue("https://data.cdc.gov/api/views/{view_name}/rows.csv?accessType=DOWNLOAD")
   curl::curl_download(url, destfile = destfile, ...)
   return(destfile)
+}
+
+rename_columns = function(data) {
+  data = data %>%
+    janitor::clean_names()
+  colnames(df) = janitor::make_clean_names(colnames(df))
+  return(df)
 }

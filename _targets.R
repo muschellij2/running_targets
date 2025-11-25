@@ -28,7 +28,7 @@ tar_source()
 list(
   tar_target(
     name = view_name,
-    command = "vyfe-wj4k"
+    command = "pwn4-m3yp"
   ),
   tar_target(last_updated_date, get_last_updated_date(view_name)),
   tar_target(filename, paste0("data/", view_name, ".csv")),
@@ -45,7 +45,7 @@ list(
 
 
   tar_target(data,
-             read_csv)
+             read_csv(file))
 
 
 
