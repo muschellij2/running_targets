@@ -23,5 +23,5 @@ rename_columns = function(data) {
       start_date = mdy(start_date),
       end_date = mdy(end_date),
     )
-  return(df)
+  return(data)
 }

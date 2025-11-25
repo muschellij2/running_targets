@@ -45,16 +45,47 @@ list(
 
 
   tar_target(
-    data,
+    raw_data,
     {
-      data = read_csv(file)
-      stop_for_problems(data)
+      # what if I call the thing "data"?
+      raw_data = read_csv(file)
+      stop_for_problems(raw_data)
       # remove this line and see what data is (e.g. returned)
-      data
+      raw_data
     }),
-  tar_targets()
 
+  tar_target(
+    data,
+    rename_columns(raw_data)
+  ),
 
+  tar_target(
+    md_data,
+    {
+      data %>%
+        filter(state == "MD")
+    }),
+
+  tar_target(
+    plot,
+    {
+      md_data %>%
+        ggplot(aes(x = end_date, y = tot_cases)) +
+        geom_step() +
+        labs(
+          title = paste("COVID-19 cases over time -", view_name),
+          x = "Date",
+          y = "Total Number of cases"
+        ) +
+        theme_minimal()
+    }
+  ),
+
+  tar_render(
+    report,
+    "docs/example.qmd"    # or "docs/report.qmd"
+  )
 
 
 )
+# see https://github.com/ropensci/targets/blob/main/inst/rmarkdown/templates/targets/skeleton/skeleton.Rmd

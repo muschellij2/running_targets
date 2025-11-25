@@ -1,0 +1,41 @@
+---
+title: "Example"
+format: html
+editor: visual
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+library(targets)
+```
+
+If you want to run this document indepdently of `tar_render` from the main targets pipeline, set this to `eval = TRUE`
+```{r, eval=FALSE}
+targets::tar_config_set(store = here::here("_targets"))
+```
+
+Alternatively, this is a robust way:
+
+```{r}
+in_targets <- function() {
+  nzchar(Sys.getenv("TAR_TARGET"))
+}
+if (!in_targets()) {
+  targets::tar_config_set(store = here::here("_targets"))
+}
+```
+
+
+# Read in the Data
+
+```{r read_data}
+df = tar_read(data)
+head(df)
+```
+
+# Read in the Plot
+
+```{r}
+tar_read(plot)
+```
+

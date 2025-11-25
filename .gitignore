@@ -8,3 +8,7 @@
 .quarto
 data
 _targets/
+docs/*.html
+docs/*.pdf
+docs/example_files
+docs/_targets.yaml
