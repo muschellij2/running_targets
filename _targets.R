@@ -16,7 +16,8 @@ tar_option_set(
   # track **all the objects and datasets** from this package as if they were part of the global environment.
   imports = c("bigrquery"),
   # default is rds, which is OK.  qs is fast.  Auto usually works well
-  format = "auto", # Optionally set the default storage format. qs is fast.
+  # likely need to do install.packages("qs2")
+  # format = "rds" # Optionally set the default storage format. qs is fast.
 )
 
 # Run the R scripts in the R/ folder with your custom functions:
@@ -29,13 +30,24 @@ list(
     name = view_name,
     command = "vyfe-wj4k"
   ),
-  tar_target(
-    name = data,
-    command = tibble(x = rnorm(100), y = rnorm(100))
-    # format = "qs" # Efficient storage for general data objects.
-  ),
-  tar_target(
-    name = model,
-    command = coefficients(lm(y ~ x, data = data))
-  )
+  tar_target(last_updated_date, get_last_updated_date(view_name)),
+  tar_target(filename, paste0("data/", view_name, ".csv")),
+  tar_target(download_output, {
+    if (Sys.Date() < last_updated_date | !file.exists(filename)) {
+      print("DOWNLOADING Data")
+      print(filename)
+      download_data_csv(view_name, destfile = filename)
+    } else {
+      filename
+    }
+  }),
+  tar_target(file, filename, format = "file"),
+
+
+  tar_target(data,
+             read_csv)
+
+
+
+
 )
